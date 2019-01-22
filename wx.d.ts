@@ -29,13 +29,26 @@ interface RequestCallBack$ {
   complete(): void;
 }
 
+interface HttpHeader$ {
+  [s: string]: string;
+}
 
+interface Config$ {
+  url: string;
+  method: string;
+  data: Object | string;
+  header: HttpHeader$;
+  dataType: string;
+}
 
+interface Entity$ {
+  config: Config$;
+  resolve(data: any): void;
+  reject(data: any): void;
+  response?: any;
+}
 
-
-
-
-declare interface Http$ {
+interface Http$ {
   create(config: HttpConfig$): Http$;
   request(
     method: string,
@@ -99,5 +112,9 @@ declare interface Http$ {
   clean(): void;
 }
 
-
-
+interface HttpConfig$ {
+  maxConcurrent: number;
+  timeout: number;
+  header: HttpHeader$;
+  dataType: string;
+}
