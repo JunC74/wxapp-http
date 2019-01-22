@@ -49,7 +49,6 @@ interface Entity$ {
 }
 
 interface Http$ {
-  create(config: HttpConfig$): Http$;
   request(
     method: string,
     url: string,

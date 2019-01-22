@@ -12,7 +12,7 @@ export declare class Http extends EventEmitter implements Http$ {
     private requestInterceptor;
     private responseInterceptor;
     constructor(config?: HttpConfig$);
-    create(config?: HttpConfig$): Http;
+    static create(config?: HttpConfig$): Http;
     private next();
     request(method: string, url: string, data?: Object | string, header?: HttpHeader$, dataType?: string): Promise<Response$>;
     head(url: string, data?: Object | string, header?: HttpHeader$, dataType?: string): Promise<Response$>;
@@ -23,9 +23,7 @@ export declare class Http extends EventEmitter implements Http$ {
     ['delete'](url: string, data?: Object | string, header?: HttpHeader$, dataType?: string): Promise<Response$>;
     trace(url: string, data?: Object | string, header?: HttpHeader$, dataType?: string): Promise<Response$>;
     connect(url: string, data?: Object | string, header?: HttpHeader$, dataType?: string): Promise<Response$>;
-    setRequestInterceptor(interceptor: (config: HttpConfig$) => boolean): Http;
+    setRequestInterceptor(interceptor: (config: HttpConfig$) => boolean): Http$;
     setResponseInterceptor(interceptor: (config: HttpConfig$, response: Response$) => boolean): Http;
     clean(): void;
 }
-declare const _default: Http;
-export default _default;

@@ -124,7 +124,7 @@ var Http = /** @class */ (function (_super) {
         _this.maxConcurrent = config.maxConcurrent;
         return _this;
     }
-    Http.prototype.create = function (config) {
+    Http.create = function (config) {
         if (config === void 0) { config = DEFAULT_CONFIG; }
         return new Http(config);
     };
@@ -250,7 +250,6 @@ var Http = /** @class */ (function (_super) {
     return Http;
 }(events_1.EventEmitter));
 exports.Http = Http;
-exports.default = new Http();
 
 
 /***/ }),

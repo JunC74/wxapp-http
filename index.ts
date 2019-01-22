@@ -24,13 +24,16 @@ export class Http extends EventEmitter implements Http$ {
     config: HttpConfig$,
     response: Response$
   ) => boolean = (config: HttpConfig$, response: Response$) => true;
+
   constructor(private config: HttpConfig$ = DEFAULT_CONFIG) {
     super();
     this.maxConcurrent = config.maxConcurrent;
   }
-  create(config: HttpConfig$ = DEFAULT_CONFIG): Http {
+
+  public static create(config: HttpConfig$ = DEFAULT_CONFIG): Http {
     return new Http(config);
   }
+
   private next(): void {
     const queue: Entity$[] = this.queue;
 
@@ -39,7 +42,7 @@ export class Http extends EventEmitter implements Http$ {
     const entity: Entity$ = queue.shift();
     const config: Config$ = entity.config;
 
-    const { requestInterceptor, responseInterceptor } = this;
+    const {requestInterceptor, responseInterceptor} = this;
 
     if (requestInterceptor.call(this, config) !== true) {
       let response: Response$ = {
@@ -102,6 +105,7 @@ export class Http extends EventEmitter implements Http$ {
       }, this.config.timeout);
     }
   }
+
   request(
     method: string,
     url: string,
@@ -113,15 +117,16 @@ export class Http extends EventEmitter implements Http$ {
       method,
       url,
       data,
-      header: { ...header, ...this.config.header },
+      header: {...header, ...this.config.header},
       dataType: dataType || this.config.dataType
     };
     return new Promise((resolve, reject) => {
-      const entity: Entity$ = { config, resolve, reject, response: null };
+      const entity: Entity$ = {config, resolve, reject, response: null};
       this.queue.push(entity);
       this.next();
     });
   }
+
   head(
     url: string,
     data?: Object | string,
@@ -130,6 +135,7 @@ export class Http extends EventEmitter implements Http$ {
   ): Promise<Response$> {
     return this.request('HEAD', url, data, header, dataType);
   }
+
   options(
     url: string,
     data?: Object | string,
@@ -138,6 +144,7 @@ export class Http extends EventEmitter implements Http$ {
   ): Promise<Response$> {
     return this.request('OPTIONS', url, data, header, dataType);
   }
+
   get(
     url: string,
     data?: Object | string,
@@ -146,6 +153,7 @@ export class Http extends EventEmitter implements Http$ {
   ): Promise<Response$> {
     return this.request('GET', url, data, header, dataType);
   }
+
   post(
     url: string,
     data?: Object | string,
@@ -154,6 +162,7 @@ export class Http extends EventEmitter implements Http$ {
   ): Promise<Response$> {
     return this.request('POST', url, data, header, dataType);
   }
+
   put(
     url: string,
     data?: Object | string,
@@ -162,6 +171,7 @@ export class Http extends EventEmitter implements Http$ {
   ): Promise<Response$> {
     return this.request('PUT', url, data, header, dataType);
   }
+
   ['delete'](
     url: string,
     data?: Object | string,
@@ -170,6 +180,7 @@ export class Http extends EventEmitter implements Http$ {
   ): Promise<Response$> {
     return this.request('DELETE', url, data, header, dataType);
   }
+
   trace(
     url: string,
     data?: Object | string,
@@ -178,6 +189,7 @@ export class Http extends EventEmitter implements Http$ {
   ): Promise<Response$> {
     return this.request('TRACE', url, data, header, dataType);
   }
+
   connect(
     url: string,
     data?: Object | string,
@@ -186,19 +198,20 @@ export class Http extends EventEmitter implements Http$ {
   ): Promise<Response$> {
     return this.request('CONNECT', url, data, header, dataType);
   }
-  setRequestInterceptor(interceptor: (config: HttpConfig$) => boolean): Http {
+
+  setRequestInterceptor(interceptor: (config: HttpConfig$) => boolean): Http$ {
     this.requestInterceptor = interceptor;
-    return this;
+    return this as Http$;
   }
+
   setResponseInterceptor(
     interceptor: (config: HttpConfig$, response: Response$) => boolean
   ): Http {
     this.responseInterceptor = interceptor;
     return this;
   }
+
   clean(): void {
     this.queue = [];
   }
 }
-
-export default new Http();
