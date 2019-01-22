@@ -1,120 +1,53 @@
+/// <reference path="wx.d.ts" />
 /**
- * Created by axetroy on 2017/6/28.
+ * Created by axetroy on 17-6-23.
  */
-
-interface RequestTask${
-  abort():void
+import { EventEmitter } from "events";
+export declare type HttpConfig = {
+    maxConcurrent: number;
+    timeout: number;
+    header: HttpHeader;
+    dataType: string;
+};
+export declare type HttpHeader = {
+    [s: string]: string;
+};
+export declare type Entity = {
+    config: Config;
+    resolve(data: any): void;
+    reject(data: any): void;
+    response?: any;
+};
+export declare type Config = {
+    url: string;
+    method: string;
+    data: Object | string;
+    header: HttpHeader;
+    dataType: string;
+};
+export declare class Http extends EventEmitter {
+    private config;
+    private ctx;
+    private queue;
+    private runningTask;
+    private readonly maxConcurrent;
+    private requestInterceptor;
+    private responseInterceptor;
+    constructor(config?: HttpConfig);
+    create(config?: HttpConfig): Http;
+    private next();
+    request(method: string, url: string, data?: Object | string, header?: HttpHeader, dataType?: string): Promise<Response$>;
+    head(url: string, data?: Object | string, header?: HttpHeader, dataType?: string): Promise<Response$>;
+    options(url: string, data?: Object | string, header?: HttpHeader, dataType?: string): Promise<Response$>;
+    get(url: string, data?: Object | string, header?: HttpHeader, dataType?: string): Promise<Response$>;
+    post(url: string, data?: Object | string, header?: HttpHeader, dataType?: string): Promise<Response$>;
+    put(url: string, data?: Object | string, header?: HttpHeader, dataType?: string): Promise<Response$>;
+    ['delete'](url: string, data?: Object | string, header?: HttpHeader, dataType?: string): Promise<Response$>;
+    trace(url: string, data?: Object | string, header?: HttpHeader, dataType?: string): Promise<Response$>;
+    connect(url: string, data?: Object | string, header?: HttpHeader, dataType?: string): Promise<Response$>;
+    setRequestInterceptor(interceptor: (config: HttpConfig) => boolean): Http;
+    setResponseInterceptor(interceptor: (config: HttpConfig, response: Response$) => boolean): Http;
+    clean(): void;
 }
-
-declare namespace wx {
-  function request(config: RequestConfig$): RequestTask$;
-}
-
-interface Wx$ {
-  request(config: RequestConfig$): RequestTask$;
-}
-
-interface Response$ {
-  data: any;
-  errMsg: string;
-  statusCode: number;
-  header: HttpHeader$;
-}
-
-interface RequestConfig$ extends RequestCallBack$, Config$ {}
-
-interface RequestCallBack$ {
-  success(data: Response$): void;
-  fail(error: Response$): void;
-  complete(): void;
-}
-
-interface HttpHeader$ {
-  [s: string]: string;
-}
-
-interface Config$ {
-  url: string;
-  method: string;
-  data: Object | string;
-  header: HttpHeader$;
-  dataType: string;
-}
-
-interface Entity$ {
-  config: Config$;
-  resolve(data: any): void;
-  reject(data: any): void;
-  response?: any;
-}
-
-interface Http$ {
-  create(config: HttpConfig$): Http$;
-  request(
-    method: string,
-    url: string,
-    body: Object | string,
-    header: Object,
-    dataType: string
-  ): Promise<any>;
-  get(
-    url: string,
-    body?: Object | string,
-    header?: Object,
-    dataType?: string
-  ): Promise<any>;
-  post(
-    url: string,
-    body?: Object | string,
-    header?: Object,
-    dataType?: string
-  ): Promise<any>;
-  put(
-    url: string,
-    body?: Object | string,
-    header?: Object,
-    dataType?: string
-  ): Promise<any>;
-  ['delete'](
-    url: string,
-    body?: Object | string,
-    header?: Object,
-    dataType?: string
-  ): Promise<any>;
-  options(
-    url: string,
-    body?: Object | string,
-    header?: Object,
-    dataType?: string
-  ): Promise<any>;
-  trace(
-    url: string,
-    body?: Object | string,
-    header?: Object,
-    dataType?: string
-  ): Promise<any>;
-  head(
-    url: string,
-    body?: Object | string,
-    header?: Object,
-    dataType?: string
-  ): Promise<any>;
-  connect(
-    url: string,
-    body?: Object | string,
-    header?: Object,
-    dataType?: string
-  ): Promise<any>;
-  setRequestInterceptor(interceptor: (config: HttpConfig$) => boolean): Http$;
-  setResponseInterceptor(
-    interceptor: (config: HttpConfig$, response: Response$) => boolean
-  ): Http$;
-  clean(): void;
-}
-
-interface HttpConfig$ {
-  maxConcurrent: number;
-  timeout: number;
-  header: HttpHeader$;
-  dataType: string;
-}
+declare const _default: Http;
+export default _default;

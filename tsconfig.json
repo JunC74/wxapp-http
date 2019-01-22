@@ -10,7 +10,8 @@
     "sourceMap": true,
     "typeRoots": [
       "node_modules/@types"
-    ]
+    ],
+    "declaration": true                   /* Generates corresponding '.d.ts' file. */
   },
   "exclude": [
     "node_modules"

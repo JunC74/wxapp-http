@@ -1,5 +1,5 @@
 {
-  "name": "wxapp-http",
+  "name": "@JunC/wxapp-http",
   "version": "3.2.0",
   "description": "Http module for WeChat APP",
   "main": "./dist/wxapp-http.js",
@@ -36,6 +36,7 @@
     "webpack": "^3.8.1"
   },
   "dependencies": {
-    "@axetroy/event-emitter.js": "^1.2.4"
+    "@types/events": "^1.2.0",
+    "events": "^3.0.0"
   }
 }
