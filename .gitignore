@@ -61,9 +61,3 @@ typings/
 
 # idea
 .idea
-
-dist
-/example/wxapp-http.js
-/index.d.ts
-/index.d.ts
-/example/wxapp-http.js
