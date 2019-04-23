@@ -100,6 +100,7 @@ export class Http extends EventEmitter implements Http$ {
         if (!finished) {
           aborted = true;
           task && task.abort();
+          entity.reject({statusCode: -1, errMsg: "time out"});
           this.next();
         }
       }, this.config.timeout);

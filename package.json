@@ -1,6 +1,6 @@
 {
   "name": "@JunC/wxapp-http",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Http module for WeChat APP",
   "main": "./dist/wxapp-http.js",
   "typings": "index.d.ts",
@@ -37,6 +37,12 @@
   },
   "dependencies": {
     "@types/events": "^1.2.0",
-    "events": "^3.0.0"
-  }
+    "events": "^3.0.0",
+    "pkgfiles": "^2.3.2"
+  },
+  "files": [
+    "dist/exapp-http.js",
+    "example/wxapp-http.js",
+    "index.d.ts"
+  ]
 }
